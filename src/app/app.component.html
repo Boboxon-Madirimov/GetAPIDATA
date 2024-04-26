@@ -29,11 +29,8 @@
     <thead>
         <tr>
             <th>ID
-                <button (click)="sortBy('id')">
-                    <i class="bi bi-arrow-down"></i>
-                </button>
-                <button (click)="sortBy('-id')">
-                    <i class="bi bi-arrow-up"></i>
+                <button class="btn btn-link btn-icon" (click)="sortBy('id')">
+                    <i class="bi bi-arrow-{{ sortOrder === 'id' ? 'down' : 'up' }}"></i>
                 </button>
             </th>
             <th>Title</th>

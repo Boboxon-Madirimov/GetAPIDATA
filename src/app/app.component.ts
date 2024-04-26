@@ -78,7 +78,7 @@ export class AppComponent implements OnInit{
 
 
   sortBy(field: string) {
-    this.sortOrder = field;
+    this.sortOrder = this.sortOrder === 'id' ? '-id' : 'id';
     this.getAllData();
   }
 
