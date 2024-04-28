@@ -3,15 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {  NgxSpinnerService } from 'ngx-spinner';
+
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HttpClientModule,FormsModule,CommonModule],
+  imports: [RouterOutlet,HttpClientModule,FormsModule,CommonModule ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
 
+  color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  displayProgressSpinner = false;
+  spinnerWithoutBackdrop = false;
 
   last:any
   info: any[] = [];
@@ -21,14 +30,31 @@ export class AppComponent implements OnInit{
   hasChecker: string = 'all';
   filterTitle: string = '';
   sortOrder: "" | "asc" | "desc" | string = "";
+  filterTimeout: any;
 
-  constructor(private http: HttpClient) { }
+  isLoading:boolean=false
+  
+  constructor(private http: HttpClient, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getAllData();
   }
 
+  showProgressSpinner = () => {
+    this.displayProgressSpinner = true;
+    setTimeout(() => {
+      this.displayProgressSpinner = false;
+    }, 3000);
+  };
+  showSpinnerWithoutBackdrop = () => {
+    this.spinnerWithoutBackdrop = true;
+    setTimeout(() => {
+      this.spinnerWithoutBackdrop = false;
+    }, 3000);
+  };
+
   getAllData() {
+    this.isLoading =true
     let queryParams = new HttpParams()
       .set('page', this.currentPage.toString())
       .set('page_size', this.pageSize.toString())
@@ -48,6 +74,12 @@ export class AppComponent implements OnInit{
 
     this.http.get<any>('https://kep.uz/api/problems', { params: queryParams }).subscribe((res) => {
       this.info = res.data;
+
+
+        this.isLoading=false
+
+
+
       this.totalPages = Math.ceil(res.total / this.pageSize);
       console.log(this.info);
     });
@@ -72,14 +104,19 @@ export class AppComponent implements OnInit{
   }
 
   applyFilters() {
-    this.currentPage = 1; 
+  this.currentPage = 1;
+
+  clearTimeout(this.filterTimeout);
+
+  this.filterTimeout = setTimeout(() => {
     this.getAllData();
+  }, 2000); 
   }
 
 
-  sortBy(field: string) {
-    this.sortOrder = this.sortOrder === 'id' ? '-id' : 'id';
+  sortBy(column: string) {
+    this.sortOrder = this.sortOrder === column ? '-' + column : column;
     this.getAllData();
-  }
+}
 
 }
