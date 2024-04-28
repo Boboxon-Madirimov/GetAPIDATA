@@ -81,7 +81,6 @@ export class AppComponent implements OnInit{
 
 
       this.totalPages = Math.ceil(res.total / this.pageSize);
-      console.log(this.info);
     });
   }
 
