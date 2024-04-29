@@ -1,12 +1,5 @@
-
-
-<div class="loader-container" *ngIf="isLoading"><div class="loader" ></div></div>
-
-
-<ng-container *ngIf="!isLoading">
-  
+<ng-container *ngIf="!isLoading" class="content">
   <div class="container p-4">
-  
   <div>
     <nav class="navbar bg-body-tertiary d-flex row">
         <div class="container-fluid col-6">
@@ -23,9 +16,7 @@
             </select>
           </div>
       </nav>
-      
   </div>
- 
   <table class="table table-hover table-striped-columns">
     <thead>
         <tr class="active">
@@ -83,10 +74,6 @@
     </div>
  </div>
 </div>
-
 </ng-container>
 
-<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-  © 2024 Copyright:
-  UzInfocom
-</div>
+<div class="loader-container" *ngIf="isLoading"><div class="loader" ></div></div>

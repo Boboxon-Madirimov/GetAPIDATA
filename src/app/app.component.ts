@@ -50,7 +50,7 @@ export class AppComponent implements OnInit{
     this.spinnerWithoutBackdrop = true;
     setTimeout(() => {
       this.spinnerWithoutBackdrop = false;
-    }, 3000);
+    }, 30000);
   };
 
   getAllData() {
